@@ -12,25 +12,24 @@ export class DishService {
   constructor(private imageService: ImageService) {
     this.loadDishes();
   }
-  
 
   getDishes(): Dish[] {
     return this.dishes;
   }
 
   addDish(dish: Omit<Dish, 'id' | 'available' | 'imageUrl' | 'imageAlt'>): void {
-  this.imageService.getDishImage(dish.name, dish.category).subscribe(image => {
-    const newDish: Dish = {
-      id: this.nextId++,
-      ...dish,
-      available: true,
-      imageUrl: image.url,
-      imageAlt: image.alt
-    };
-    this.dishes.push(newDish);
-    this.saveDishes();
-  });
-}
+    this.imageService.getDishImage(dish.name, dish.category).subscribe(image => {
+      const newDish: Dish = {
+        id: this.nextId++,
+        ...dish,
+        available: true,
+        imageUrl: image.url,
+        imageAlt: image.alt
+      };
+      this.dishes.push(newDish);
+      this.saveDishes();
+    });
+  }
 
   toggleAvailability(id: number): void {
     const dish = this.dishes.find(d => d.id === id);
@@ -45,23 +44,23 @@ export class DishService {
     this.saveDishes();
   }
 
-private saveDishes(): void {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    localStorage.setItem('restaurantDishes', JSON.stringify({
-      dishes: this.dishes,
-      nextId: this.nextId
-    }));
-  }
-}
-
-private loadDishes(): void {
-  if (typeof window !== 'undefined' && window.localStorage) {
-    const data = localStorage.getItem('restaurantDishes');
-    if (data) {
-      const parsed = JSON.parse(data);
-      this.dishes = parsed.dishes;
-      this.nextId = parsed.nextId;
+  private saveDishes(): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('restaurantDishes', JSON.stringify({
+        dishes: this.dishes,
+        nextId: this.nextId
+      }));
     }
   }
-}
+
+  private loadDishes(): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const data = localStorage.getItem('restaurantDishes');
+      if (data) {
+        const parsed = JSON.parse(data);
+        this.dishes = parsed.dishes;
+        this.nextId = parsed.nextId;
+      }
+    }
+  }
 }
