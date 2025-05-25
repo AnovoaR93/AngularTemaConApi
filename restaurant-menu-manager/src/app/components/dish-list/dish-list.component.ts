@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Dish } from '../../models/dish.models';
+import { Dish } from '../../models/dish.model';
 import { DishService } from '../../services/dish.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dish-list',
   templateUrl: './dish-list.component.html',
+  imports: [CommonModule], 
   styleUrls: ['./dish-list.component.css']
 })
 export class DishListComponent implements OnInit {

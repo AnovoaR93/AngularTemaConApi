@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Dish } from '../models/dish.models';
+import { Dish } from '../models/dish.model';
 import { ImageService } from './image.service';
 
 @Injectable({
@@ -45,14 +45,17 @@ export class DishService {
     this.saveDishes();
   }
 
-  private saveDishes(): void {
+private saveDishes(): void {
+  if (typeof window !== 'undefined' && window.localStorage) {
     localStorage.setItem('restaurantDishes', JSON.stringify({
       dishes: this.dishes,
       nextId: this.nextId
     }));
   }
+}
 
-  private loadDishes(): void {
+private loadDishes(): void {
+  if (typeof window !== 'undefined' && window.localStorage) {
     const data = localStorage.getItem('restaurantDishes');
     if (data) {
       const parsed = JSON.parse(data);
@@ -60,4 +63,5 @@ export class DishService {
       this.nextId = parsed.nextId;
     }
   }
+}
 }
