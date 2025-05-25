@@ -1,0 +1,39 @@
+<div *ngFor="let dish of filteredDishes" class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img [src]="dish.imageUrl" [alt]="dish.imageAlt" class="img-fluid rounded-start h-100" style="object-fit: cover;">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <h5 class="card-title" [class.text-muted]="!dish.available">
+              {{ dish.name }}
+              <span *ngIf="!dish.available" class="badge bg-danger ms-2">No disponible</span>
+            </h5>
+            <p class="card-text text-muted">{{ dish.description }}</p>
+            <span class="badge bg-secondary me-2">{{ dish.category }}</span>
+            <span class="badge bg-info text-dark">
+              {{ dish.price | currency:'EUR':'symbol':'1.2-2' }}
+            </span>
+          </div>
+          <div class="btn-group" role="group">
+            <button (click)="toggleAvailability(dish.id)" 
+                    class="btn btn-sm me-2"
+                    [ngClass]="{
+                      'btn-outline-success': !dish.available,
+                      'btn-outline-warning': dish.available
+                    }">
+              <i class="fas" [class.fa-check-circle]="dish.available" [class.fa-times-circle]="!dish.available"></i>
+              {{ dish.available ? 'Disponible' : 'No disponible' }}
+            </button>
+            <button (click)="deleteDish(dish.id)" 
+                    class="btn btn-sm btn-outline-danger">
+              <i class="fas fa-trash-alt"></i> Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

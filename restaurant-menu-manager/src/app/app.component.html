@@ -1,0 +1,15 @@
+<div class="container my-5">
+  <div class="text-center mb-5">
+    <h1 class="display-4"><i class="fas fa-utensils text-primary me-2"></i>Restaurante Delicioso</h1>
+    <p class="lead">Sistema de Gestión del Menú</p>
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-4 mb-4">
+      <app-dish-form (dishAdded)="onDishAdded()"></app-dish-form>
+    </div>
+    <div class="col-lg-8">
+      <app-dish-list #dishList></app-dish-list>
+    </div>
+  </div>
+</div>
